@@ -1,0 +1,9 @@
+{
+    "id" : "DAGTestingModule",
+    "version" : "0.1.0-SNAPSHOT",
+    "author" : "",
+    "displayName" : "DAGTestingModule",
+    "description" : "",
+    "dependencies" : [],
+    "serverSideOnly" : false
+}
