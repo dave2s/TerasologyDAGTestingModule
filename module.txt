@@ -1,9 +1,9 @@
 {
-    "id" : "DAGTestingModule",
+    "id" : "dagTestingModule",
     "version" : "0.1.0-SNAPSHOT",
-    "author" : "",
+    "author" : "Dave2S",
     "displayName" : "DAGTestingModule",
-    "description" : "",
+    "description" : "Rendering interaction module",
     "dependencies" : [],
     "serverSideOnly" : false
 }
