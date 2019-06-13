@@ -16,12 +16,9 @@
 package org.terasology.rendering;
 
 import org.terasology.context.Context;
-import org.terasology.engine.SimpleUri;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.registry.In;
-import org.terasology.rendering.dag.gsoc.NewNode;
-import org.terasology.rendering.dag.RenderGraph;
 import org.terasology.rendering.dag.api.RenderGraphAPI;
 
 // TODO NewAbstractNode to NewNode only!, no NewAbstractNode in here
@@ -47,6 +44,7 @@ public class TintNodeRemoval extends BaseComponentSystem {
         // NewNode tintNode = rg.findNode("engine:tintNode");
         // NewNode outputToScreenNode = rg.findNode();
 
+        renderGraphApi.disconnectOutputFbo("engine:finalPostProcessingNode",1);
         renderGraphApi.reconnectInputFboToOutput("engine:outputToScreenNode", 1, "engine:finalPostProcessingNode", 1);
         // renderGraphApi.removeNode(new SimpleUri("engine:tintNode"));
         // TODO disconnect and remove from renderGraph
