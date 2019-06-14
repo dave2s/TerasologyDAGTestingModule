@@ -19,7 +19,8 @@ import org.terasology.context.Context;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.registry.In;
-import org.terasology.rendering.dag.api.RenderGraphAPI;
+import org.terasology.rendering.dag.api.RenderDagApiInterface;
+import org.terasology.rendering.dag.gsoc.RenderDagApi;
 
 // TODO NewAbstractNode to NewNode only!, no NewAbstractNode in here
 // TODO Decide on what must by marked as @API or whitelisted (like nodes and such...use renderGraphAPI to access main DAG)
@@ -29,12 +30,12 @@ public class TintNodeRemoval extends BaseComponentSystem {
     @In
     Context context;
 
-    RenderGraphAPI renderGraphApi;
+    RenderDagApiInterface renderDagApi;
 
     @Override
     public void initialise() {
         super.initialise();
-        renderGraphApi = context.get(RenderGraphAPI.class);
+        renderDagApi = context.get(RenderDagApiInterface.class);
 
         // TODO SHOULD THIS BE ACCESSIBLE? - NO
         // RenderGraph rg = context.get(RenderGraph.class);
@@ -44,9 +45,9 @@ public class TintNodeRemoval extends BaseComponentSystem {
         // NewNode tintNode = rg.findNode("engine:tintNode");
         // NewNode outputToScreenNode = rg.findNode();
 
-        renderGraphApi.disconnectOutputFbo("engine:finalPostProcessingNode",1);
-        renderGraphApi.reconnectInputFboToOutput("engine:outputToScreenNode", 1, "engine:finalPostProcessingNode", 1);
-        // renderGraphApi.removeNode(new SimpleUri("engine:tintNode"));
+        renderDagApi.disconnectOutputFbo("engine:finalPostProcessingNode",1);
+        renderDagApi.reconnectInputFboToOutput("engine:outputToScreenNode", 1, "engine:finalPostProcessingNode", 1);
+        // renderDagApi.removeNode(new SimpleUri("engine:tintNode"));
         // TODO disconnect and remove from renderGraph
 
         // rg.addNode(new TintNode("aha",context));
