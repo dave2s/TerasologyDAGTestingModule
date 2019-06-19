@@ -26,7 +26,7 @@ import org.terasology.rendering.dag.nodes.TintNode;
 // TODO NewAbstractNode to NewNode only!, no NewAbstractNode in here
 // TODO Decide on what must by marked as @API or whitelisted (like nodes and such...use renderGraphAPI to access main DAG)
 @RegisterSystem
-public class TintNodeRemoval extends BaseComponentSystem {
+public class TintMyOutput extends BaseComponentSystem {
 
     @In
     Context context;
@@ -45,13 +45,15 @@ public class TintNodeRemoval extends BaseComponentSystem {
         // Create a new tintNode
         NewNode tintNode = new TintNode("tintNode", context);
 
-        // Disconnect finalPostProcess and Output nodes
-        // renderDagApi.disconnectOutputFbo("finalPostProcessingNode", 1);
+        // TODO nice to have, many possibilities of autonomous insertion
+        // renderDagApi.insertBefore(tintNode, "engine:outputToScreenNode");
 
-        // Reconnect
-        renderDagApi.reconnectInputFboToOutput(tintNode, 1, "finalPostProcessingNode", 1);
-        renderDagApi.addNode(tintNode);
+         renderDagApi.disconnectOutputFbo("engine:finalPostProcessingNode", 1);
+         renderDagApi.reconnectInputFboToOutput(tintNode, 1, "engine:finalPostProcessingNode", 1);
+         renderDagApi.addNode(tintNode);
 
-        renderDagApi.reconnectInputFboToOutput("outputToScreenNode", 1, "tintNode", 1);
+         NewNode outputToScreenNode = renderDagApi.findNode("engine:outputToScreenNode");
+         renderDagApi.reconnectInputFboToOutput(outputToScreenNode, 1, "DagTestingModule:tintNode", 1);
+         outputToScreenNode.resetDesiredStateChanges();
     }
 }
