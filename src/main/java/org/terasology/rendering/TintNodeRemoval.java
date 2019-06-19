@@ -20,7 +20,8 @@ import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.registry.In;
 import org.terasology.rendering.dag.api.RenderDagApiInterface;
-import org.terasology.rendering.dag.gsoc.RenderDagApi;
+import org.terasology.rendering.dag.gsoc.NewNode;
+import org.terasology.rendering.dag.nodes.TintNode;
 
 // TODO NewAbstractNode to NewNode only!, no NewAbstractNode in here
 // TODO Decide on what must by marked as @API or whitelisted (like nodes and such...use renderGraphAPI to access main DAG)
@@ -37,20 +38,20 @@ public class TintNodeRemoval extends BaseComponentSystem {
         super.initialise();
         renderDagApi = context.get(RenderDagApiInterface.class);
 
-        // TODO SHOULD THIS BE ACCESSIBLE? - NO
-        // RenderGraph rg = context.get(RenderGraph.class);
+        moduleTintOutput();
+    }
 
-        // TODO SHOULD THIS BE POSSIBLE from within a module ??
-        // NewNode finalPostProcessingNode = rg.findNode();
-        // NewNode tintNode = rg.findNode("engine:tintNode");
-        // NewNode outputToScreenNode = rg.findNode();
+    private void moduleTintOutput() {
+        // Create a new tintNode
+        NewNode tintNode = new TintNode("tintNode", context);
 
-        renderDagApi.disconnectOutputFbo("engine:finalPostProcessingNode",1);
-        renderDagApi.reconnectInputFboToOutput("engine:outputToScreenNode", 1, "engine:finalPostProcessingNode", 1);
-        // renderDagApi.removeNode(new SimpleUri("engine:tintNode"));
-        // TODO disconnect and remove from renderGraph
+        // Disconnect finalPostProcess and Output nodes
+        // renderDagApi.disconnectOutputFbo("finalPostProcessingNode", 1);
 
-        // rg.addNode(new TintNode("aha",context));
-        // System.out.println(tintNode.toString());
+        // Reconnect
+        renderDagApi.reconnectInputFboToOutput(tintNode, 1, "finalPostProcessingNode", 1);
+        renderDagApi.addNode(tintNode);
+
+        renderDagApi.reconnectInputFboToOutput("outputToScreenNode", 1, "tintNode", 1);
     }
 }
