@@ -23,7 +23,6 @@ import org.terasology.rendering.assets.material.Material;
 import org.terasology.rendering.cameras.SubmersibleCamera;
 import org.terasology.rendering.dag.gsoc.NewAbstractNode;
 import org.terasology.rendering.dag.gsoc.PropertyChangeListener;
-import org.terasology.rendering.dag.gsoc.PropertyChangeEvent;
 import org.terasology.rendering.dag.stateChanges.BindFbo;
 import org.terasology.rendering.dag.stateChanges.EnableMaterial;
 import org.terasology.rendering.dag.stateChanges.SetInputTextureFromFbo;
@@ -44,7 +43,8 @@ import static org.terasology.rendering.opengl.ScalingFactors.FULL_SCALE;
  * Stores the result into the InitialPostProcessingNode.INITIAL_POST_FBO_URI, to be used at a later stage.
  */
 public class TintNode extends NewAbstractNode implements PropertyChangeListener {
-    private static final ResourceUrn TINT_MATERIAL_URN = new ResourceUrn("engine:prog.tint");
+    // TODO get rid of this, add shader type dependency.
+    private static final ResourceUrn TINT_MATERIAL_URN = new ResourceUrn("dagTestingModule:prog.tint");
     private static final SimpleUri TINT_FBO_URI = new SimpleUri("engine:fbo.tint");
 
     private WorldRenderer worldRenderer;
