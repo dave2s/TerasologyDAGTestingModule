@@ -22,7 +22,6 @@ import org.terasology.monitoring.PerformanceMonitor;
 import org.terasology.rendering.assets.material.Material;
 import org.terasology.rendering.cameras.SubmersibleCamera;
 import org.terasology.rendering.dag.gsoc.NewAbstractNode;
-import org.terasology.rendering.dag.gsoc.PropertyChangeListener;
 import org.terasology.rendering.dag.stateChanges.BindFbo;
 import org.terasology.rendering.dag.stateChanges.EnableMaterial;
 import org.terasology.rendering.dag.stateChanges.SetInputTextureFromFbo;
@@ -32,6 +31,9 @@ import org.terasology.rendering.opengl.FboConfig;
 import org.terasology.rendering.opengl.fbms.DisplayResolutionDependentFbo;
 import org.terasology.rendering.world.WorldRenderer;
 import org.terasology.math.geom.Vector3f;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 import static org.terasology.rendering.dag.stateChanges.SetInputTextureFromFbo.FboTexturesTypes.ColorTexture;
 import static org.terasology.rendering.opengl.OpenGLUtils.renderFullscreenQuad;
@@ -107,8 +109,7 @@ public class TintNode extends NewAbstractNode implements PropertyChangeListener 
     }
 
     @Override
-    public void propertyChange(java.beans.PropertyChangeEvent event) {
-        worldRenderer.requestTaskListRefresh();
+    public void propertyChange(PropertyChangeEvent event) {
     }
 
 }

@@ -35,19 +35,19 @@ public class TintMyOutput extends ModuleRenderingSystem {
 
     private void moduleTintOutput() {
         // Create a new tintNode
-        renderDagApi.addShader("tint", providingModule);
+        renderGraph.addShader("tint", providingModule);
         NewNode tintNode = new TintNode("tintNode", context);
         // TODO connectEShader(distinguish between engine based and module based);
 
         // TODO nice to have, many possibilities of autonomous insertion
         // renderDagApi.insertBefore(tintNode, "engine:outputToScreenNode");
 
-        renderDagApi.disconnectOutputFbo("engine:finalPostProcessingNode", 1);
-        renderDagApi.reconnectInputFboToOutput(tintNode, 1, "engine:finalPostProcessingNode", 1);
-        renderDagApi.addNode(tintNode);
+        renderGraph.disconnectOutputFbo("engine:finalPostProcessingNode", 1);
+        renderGraph.reconnectInputFboToOutput(tintNode, 1, "engine:finalPostProcessingNode", 1);
+        renderGraph.addNode(tintNode);
 
-        NewNode outputToScreenNode = renderDagApi.findNode("engine:outputToScreenNode");
-        renderDagApi.reconnectInputFboToOutput(outputToScreenNode, 1, "DagTestingModule:tintNode", 1);
+        NewNode outputToScreenNode = renderGraph.findNode("engine:outputToScreenNode");
+        renderGraph.reconnectInputFboToOutput(outputToScreenNode, 1, "DagTestingModule:tintNode", 1);
         outputToScreenNode.resetDesiredStateChanges();
     }
 }
