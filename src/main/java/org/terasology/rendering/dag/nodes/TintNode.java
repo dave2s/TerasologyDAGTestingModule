@@ -19,6 +19,7 @@ import org.terasology.assets.ResourceUrn;
 import org.terasology.context.Context;
 import org.terasology.engine.SimpleUri;
 import org.terasology.monitoring.PerformanceMonitor;
+import org.terasology.naming.Name;
 import org.terasology.rendering.assets.material.Material;
 import org.terasology.rendering.cameras.SubmersibleCamera;
 import org.terasology.rendering.dag.gsoc.NewAbstractNode;
@@ -60,8 +61,9 @@ public class TintNode extends NewAbstractNode implements PropertyChangeListener 
 
     private Vector3f defaultTintRgba = new Vector3f(3.f, 1.f, 1.f);
 
-    public TintNode(String nodeUri, Context context) {
-        super(nodeUri, context);
+    public TintNode(String nodeUri, Name providingModule, Context context) {
+        super(nodeUri, providingModule, context);
+        addOutputFboConnection(1);
     }
 
     @Override
